@@ -1,0 +1,10 @@
+name = "rpass"
+version = "0.1.0"
+description = "simple rust password manager/generator"
+authors = ["michal <michal@tar.black>"]
+license = "nolicense"
+tracked_files = ["/bin/rpass"]
+dependencies = []
+provides = ["rpass"]
+conflicts = []
+arch = "x86_64"
