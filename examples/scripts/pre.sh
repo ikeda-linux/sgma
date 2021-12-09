@@ -2,4 +2,13 @@
 
 pkgname="foo"
 
-mkdir -p "/opt/$pkgname"
+preinstall_script () {
+    mkdir -p "/opt/$pkgname"
+}
+
+main () {
+    preinstall_script
+    exit 0
+}
+
+main

@@ -13,7 +13,7 @@ get () {
 }
 
 make () {
-    cd src/
+    cd ${src}
     mkdir -p ${out}/overlay/bin
     inf "Building..."
     cargo build --release --package rpass
@@ -34,5 +34,4 @@ main () {
 }
 
 main
-echo
 exit 0

@@ -5,6 +5,8 @@ mod structs;
 use structs::ConfigFile;
 mod scripts;
 use scripts::*;
+mod help;
+use help::help;
 
 fn main() {
     // grabs the arguments
@@ -65,6 +67,7 @@ fn main() {
             }
         );
         println!("Initialised new repository at {}", path);
+        std::process::exit(0);
     }
 
     // parse config file
@@ -306,6 +309,12 @@ fn main() {
                     std::process::exit(1);
                 }
             );
+            fs::create_dir(srcpath.to_string() + "/" + pkg + "/config").unwrap_or_else(
+                |err| {
+                    eprintln!("Could not create directory: {}", err);
+                    std::process::exit(1);
+                }
+            );
 
             // define default config for the source package
             let default_srcpkg = Package {
@@ -381,6 +390,52 @@ fn main() {
             });
             println!("Created new source package {}", pkg);       
         }
-        _ => {}
+        "query" => {
+            // make sure we're actually in a repository and that the config is valid
+            if !Path::exists(Path::new(&"./sgma.toml")) {
+                eprintln!("Could not find sgma.toml, have you initialised a repository?");
+                std::process::exit(1);
+            }
+            if srcpath.is_empty() {
+                eprintln!("No srcpath specified in sgma.toml");
+                std::process::exit(1);
+            }
+            if outpath.is_empty() {
+                eprintln!("No outpath specified in sgma.toml");
+                std::process::exit(1);
+            }
+
+            // query the database for the package       
+            let res = libdlta::database::query::query(pkg, Path::new(&format!("{}/db.sqlite", outpath)));
+            println!("{:?}", res);
+        }
+        "rm" => {
+            // make sure we're actually in a repository and that the config is valid
+            if !Path::exists(Path::new(&"./sgma.toml")) {
+                eprintln!("Could not find sgma.toml, have you initialised a repository?");
+                std::process::exit(1);
+            }
+            if srcpath.is_empty() {
+                eprintln!("No srcpath specified in sgma.toml");
+                std::process::exit(1);
+            }
+            if outpath.is_empty() {
+                eprintln!("No outpath specified in sgma.toml");
+                std::process::exit(1);
+            }
+
+            // remove the package from the database
+            let query = libdlta::database::query::query(pkg, Path::new(&format!("{}/db.sqlite", outpath)));
+            let res = libdlta::database::remove::remove(query, Path::new(&format!("{}/db.sqlite", outpath))).unwrap_or_else(
+                |err| {
+                    eprintln!("Could not remove package from database: {}", err);
+                    std::process::exit(1);
+                }
+            );
+            println!("{:?}", res);
+        }
+        _ => {
+            help();
+        }
     }
 }

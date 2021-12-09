@@ -1,5 +1,14 @@
 #!/usr/bin/env bash
 
-hooknamne="wasting time"
+hookname="wasting time"
 
-echo "Doing something! (${hookname})" > /dev/null
+hook () {
+    echo "Doing something! (${hookname})" > /dev/null
+}
+
+main () {
+    hook
+    exit 0
+}
+
+main

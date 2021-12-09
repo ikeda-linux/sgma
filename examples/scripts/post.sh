@@ -2,4 +2,13 @@
 
 pkgname="foo"
 
-rm -r "/opt/$pkgname"
+postinstall_script () {
+    rm -r "/opt/$pkgname"
+}
+
+main () {
+    postinstall_script
+    exit 0
+}
+
+main

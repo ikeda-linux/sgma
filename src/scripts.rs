@@ -22,6 +22,12 @@ make () {
     ./make install
 }
 
+permissions () {
+    inf "Setting correct permissions..."
+    chown -R root:root ${out}
+    chmod -R 755 ${out}
+}
+
 clean () {
     inf "Getting rid of build artifacts..."
     rm -rf ${src}/* ${src}/.* > /dev/null 2>&1
@@ -30,30 +36,61 @@ clean () {
 main () {
     get
     make
+    permissions
     clean
+    exit 0
 }
 
 main
-echo
-exit 0"#;
+"#;
 
 pub static PRE_SH: &'static str =
 r#"#!/usr/bin/env bash
 
 pkgname="foo"
 
-mkdir -p "/opt/$pkgname""#;
+preinstall_script () {
+    mkdir -p "/opt/$pkgname"
+}
+
+main () {
+    preinstall_script
+    exit 0
+}
+
+main
+"#;
 
 pub static POST_SH: &'static str =
 r#"#!/usr/bin/env bash
 
 pkgname="foo"
 
-rm -r "/opt/$pkgname""#;
+postinstall_script () {
+    rm -r "/opt/$pkgname"
+}
+
+main () {
+    postinstall_script
+    exit 0
+}
+
+main
+"#;
 
 pub static HOOK_SH: &'static str =
 r#"#!/usr/bin/env bash
 
-hooknamne="wasting time"
+hookname="wasting time"
 
-echo "Doing something! (${hookname})" > /dev/null"#;
+hook () {
+    echo "Doing something! (${hookname})" > /dev/null
+}
+
+main () {
+    hook
+    exit 0
+}
+
+main
+"#;

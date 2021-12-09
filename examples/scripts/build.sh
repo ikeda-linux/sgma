@@ -21,6 +21,12 @@ make () {
     ./make install
 }
 
+permissions () {
+    inf "Setting correct permissions..."
+    chown -R root:root ${out}
+    chmod -R 755 ${out}
+}
+
 clean () {
     inf "Getting rid of build artifacts..."
     rm -rf ${src}/* ${src}/.* > /dev/null 2>&1
@@ -29,9 +35,9 @@ clean () {
 main () {
     get
     make
+    permissions
     clean
+    exit 0
 }
 
 main
-echo
-exit 0
