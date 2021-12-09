@@ -27,11 +27,17 @@ clean () {
     rm -rf ${src}/* ${src}/.* > /dev/null 2>&1
 }
 
+permissions () {
+    inf "Setting correct permissions..."
+    chown -R root:root ${out}
+    chmod -R 755 ${out}
+}
+
 main () {
     get
     make
     clean
+    exit 0
 }
 
 main
-exit 0
