@@ -7,4 +7,5 @@ tracked_files = ["/bin/rpass"]
 dependencies = []
 provides = ["rpass"]
 conflicts = []
+reccomendations = []
 arch = "x86_64"
