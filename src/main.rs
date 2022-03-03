@@ -327,6 +327,7 @@ fn main() {
                 dependencies: Some(Vec::new()),
                 provides: Some(Vec::new()),
                 conflicts: Some(Vec::new()),
+                reccomendations: Some(Vec::new()),
                 arch: "any".to_string(),
             };
 
