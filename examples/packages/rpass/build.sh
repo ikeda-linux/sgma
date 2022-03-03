@@ -12,7 +12,7 @@ get () {
     git clone https://git.tar.black/michal/passman ${src}
 }
 
-make () {
+build () {
     cd ${src}
     mkdir -p ${out}/overlay/bin
     inf "Building..."
@@ -35,8 +35,9 @@ permissions () {
 
 main () {
     get
-    make
+    build
     clean
+    permissions
     exit 0
 }
 

@@ -409,7 +409,7 @@ fn main() {
             let res = libdlta::database::query::query(pkg, Path::new(&format!("{}/db.sqlite", outpath)));
             println!("{:?}", res);
         }
-        "rm" => {
+        "remove" => {
             // make sure we're actually in a repository and that the config is valid
             if !Path::exists(Path::new(&"./sgma.toml")) {
                 eprintln!("Could not find sgma.toml, have you initialised a repository?");

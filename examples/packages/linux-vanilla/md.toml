@@ -1,0 +1,11 @@
+name = "linux-vanilla"
+version = "5.15.6"
+description = "linux kernel"
+authors = ["linus torvalds <torvalds@osdl.org>"]
+license = "gplv2"
+tracked_files = [""]
+dependencies = []
+provides = ["kernel"]
+conflicts = []
+reccomendations = []
+arch = "x86_64"
