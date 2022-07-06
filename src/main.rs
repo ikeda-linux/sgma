@@ -1,5 +1,5 @@
 use std::{env::{self, set_current_dir}, fs::{self, File}, path::Path, process::Command, io::{Write, Read}};
-use libdlta::{database::initialise::initialise, base::structs::Package, database::add::add};
+use klakier::{database::initialise::initialise, base::structs::Package, database::add::add};
 
 mod structs;
 use structs::ConfigFile;
@@ -136,7 +136,7 @@ fn main() {
                     eprintln!("Could not execute build script: {}", err);
                     std::process::exit(1);
                 }).wait().unwrap();
-            let package = toml::from_str::<Package>(&fs::read_to_string("md.toml").unwrap_or_else(|_| {
+            let package = toml::from_str::<Pachttps://github.com/ikeda-linux/klakierkage>(&fs::read_to_string("md.toml").unwrap_or_else(|_| {
                 eprintln!("Could not find md.toml");
                 std::process::exit(1);
             })).unwrap_or_else(|err| {
@@ -407,7 +407,7 @@ fn main() {
             }
 
             // query the database for the package       
-            let res = libdlta::database::query::query(pkg, Path::new(&format!("{}/db.sqlite", outpath)));
+            let res = klakier::database::query::query(pkg, Path::new(&format!("{}/db.sqlite", outpath)));
             println!("{:?}", res);
         }
         "remove" => {
@@ -426,8 +426,8 @@ fn main() {
             }
 
             // remove the package from the database
-            let query = libdlta::database::query::query(pkg, Path::new(&format!("{}/db.sqlite", outpath)));
-            let res = libdlta::database::remove::remove(query, Path::new(&format!("{}/db.sqlite", outpath))).unwrap_or_else(
+            let query = klakier::database::query::query(pkg, Path::new(&format!("{}/db.sqlite", outpath)));
+            let res = klakier::database::remove::remove(query, Path::new(&format!("{}/db.sqlite", outpath))).unwrap_or_else(
                 |err| {
                     eprintln!("Could not remove package from database: {}", err);
                     std::process::exit(1);
