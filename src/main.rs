@@ -12,7 +12,7 @@ fn main() {
     // grabs the arguments
     let args: Vec<String> = env::args().collect::<Vec<String>>()[1..].to_vec();
     if args.is_empty() {
-        println!("Usage: dlta <command> <package>");
+        println!("Usage: sgma <command> <package>");
         return;
     }
     
@@ -27,7 +27,7 @@ fn main() {
         }
     }
     
-    // sets the 0th argument (e.g. dlta **install**) as "oper"
+    // sets the 0th argument (e.g. sgma **install**) as "oper"
     let oper = args[0].clone();
     
     if oper.as_str() == "init-repo" {
